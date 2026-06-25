@@ -8,11 +8,11 @@
 		<version>4.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>br.ufrpe.prisma</groupId>
+	<artifactId>m1-ingestao</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>prisma-m1-ingestao</name>
+	<description>Módulo de Ingestão de Denúncias - Projeto Prisma</description>
 	<url/>
 	<licenses>
 		<license/>
