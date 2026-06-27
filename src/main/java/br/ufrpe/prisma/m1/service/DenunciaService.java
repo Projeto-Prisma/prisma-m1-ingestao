@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import br.ufrpe.prisma.m1.domain.enums.Status;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -61,12 +62,16 @@ public class DenunciaService {
 
         Denuncia saved = repository.save(denuncia);
 
+        Map<String, String> localizacao = saved.getOnde() != null
+            ? Map.of("endereco", saved.getOnde())
+            : null;
+
         var evento = new DenunciaRecebidaEvent(
-            saved.getId(),
-            saved.getAssunto(),
+            saved.getId().toString(),
             saved.getDescricao(),
-            saved.getOnde(),
-            saved.getAnexos().isEmpty() ? null : saved.getAnexos().get(0).getArquivoUrl(),
+            saved.getAssunto(),
+            localizacao,
+            (saved.getAnexos() == null || saved.getAnexos().isEmpty()) ? null : saved.getAnexos().get(0).getArquivoUrl(),
             saved.getRecebidaEm()
         );
 
@@ -191,11 +196,11 @@ public class DenunciaService {
     }
 
     record DenunciaRecebidaEvent(
-        UUID id, 
-        String assunto,
-        String descricao, 
-        String onde, 
-        String fotoUrl, 
+        String id,
+        String texto,
+        String assunto_usuario,
+        Map<String, String> localizacao,
+        String foto,
         LocalDateTime timestamp
     ) {}
 }

@@ -41,8 +41,7 @@ public class Denuncia {
     @Column(nullable = false)
     private Status status;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "denuncia", cascade = CascadeType.ALL)
     private Manifestante manifestante;
 
     @OneToMany(mappedBy = "denuncia", cascade = CascadeType.ALL)
