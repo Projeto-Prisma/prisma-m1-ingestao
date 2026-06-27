@@ -7,5 +7,6 @@ RUN ./mvnw clean package -DskipTests
 # Estágio de execução
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/m1-ingestao-0.0.1-SNAPSHOT.jar app.jar
+# Copia qualquer jar que estiver na pasta target para app.jar, independente da versão
+COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]

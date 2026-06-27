@@ -5,7 +5,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "anexos")
-@Getter @Setter
+@Getter 
+@Setter 
+@Builder 
+@NoArgsConstructor 
+@AllArgsConstructor
 public class Anexo {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -13,6 +17,7 @@ public class Anexo {
 
     private String arquivoUrl;
     private String mimeType;
+    private Long tamanhoEmBytes;
 
     @ManyToOne
     @JoinColumn(name = "denuncia_id")

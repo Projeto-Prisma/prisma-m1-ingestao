@@ -48,6 +48,9 @@ public class Denuncia {
     @OneToMany(mappedBy = "denuncia", cascade = CascadeType.ALL)
     private List<Anexo> anexos;
 
+    @OneToMany(mappedBy = "denuncia", cascade = CascadeType.ALL)
+    private List<HistoricoStatus> historico;
+    
     @PrePersist
     protected void onCreate() {
         this.status = Status.RECEBIDA;

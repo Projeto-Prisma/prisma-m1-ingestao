@@ -11,6 +11,11 @@ public class Manifestante {
     @Id
     private UUID denunciaId; // PK e FK ligada à Denúncia
 
+    @MapsId // Vincula este ID ao ID da Denúncia
+    @OneToOne
+    @JoinColumn(name = "denunciaId")
+    private Denuncia denuncia;
+    
     @Enumerated(EnumType.STRING)
     private Emissor tipo;
     private boolean sigilo;
