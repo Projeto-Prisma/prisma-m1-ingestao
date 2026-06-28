@@ -153,7 +153,7 @@ public class DenunciaService {
             : List.of();
 
         return new DenunciaResponseDTO(
-                den.getProtocolo(), den.getAssunto(), den.getDescricao(), den.getOnde(),
+                den.getId(), den.getProtocolo(), den.getAssunto(), den.getDescricao(), den.getOnde(),
                 den.getProtocoloAnterior(), den.getStatus(), den.getRecebidaEm(),
                 den.getUpdatedAt(), manifestanteDto, anexosDto, historicoDto
         );
