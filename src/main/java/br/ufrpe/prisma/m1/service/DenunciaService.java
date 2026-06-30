@@ -173,7 +173,7 @@ public class DenunciaService {
             .genero(dto.manifestante().genero())
             .celular(dto.manifestante().celular())
             .email(dto.manifestante().email())
-            .denuncia(denuncia) // Agora este método existe!
+            .denuncia(denuncia) 
             .build();
     }
 
