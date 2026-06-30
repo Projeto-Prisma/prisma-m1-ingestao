@@ -30,7 +30,6 @@ public class Denuncia {
 
     private String protocoloAnterior;
 
-    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime recebidaEm;
 
@@ -53,5 +52,8 @@ public class Denuncia {
     @PrePersist
     protected void onCreate() {
         this.status = Status.RECEBIDA;
+        if (this.recebidaEm == null) {
+            this.recebidaEm = LocalDateTime.now();
+        }
     }
 }
