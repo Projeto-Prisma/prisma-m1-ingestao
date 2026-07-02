@@ -87,15 +87,33 @@ public class DenunciaService {
     @Transactional
     public void atualizarStatus(UUID denunciaId, Status novoStatus) {
         Denuncia den = repository.findById(denunciaId).orElseThrow(() -> new DenunciaException("Denúncia não encontrada com o ID: " + denunciaId));
-    
-        // Adiciona ao histórico
+
         HistoricoStatus log = HistoricoStatus.builder()
             .status(novoStatus)
             .dataAlteracao(LocalDateTime.now())
             .denuncia(den)
             .build();
-    
+
         den.setStatus(novoStatus);
+        den.getHistorico().add(log);
+        repository.save(den);
+    }
+
+    @Transactional
+    public void confirmarAssunto(UUID denunciaId, String assuntoFinal) {
+        Denuncia den = repository.findById(denunciaId)
+            .orElseThrow(() -> new DenunciaException("Denúncia não encontrada com o ID: " + denunciaId));
+
+        den.setAssunto(assuntoFinal);
+
+        // Registra a revisão humana no histórico reutilizando o status atual
+        HistoricoStatus log = HistoricoStatus.builder()
+            .status(den.getStatus())
+            .observacao("assunto confirmado manualmente: " + assuntoFinal)
+            .dataAlteracao(LocalDateTime.now())
+            .denuncia(den)
+            .build();
+
         den.getHistorico().add(log);
         repository.save(den);
     }
@@ -146,10 +164,10 @@ public class DenunciaService {
                 .collect(Collectors.toList()) 
             : List.of();
         
-        List<DenunciaResponseDTO.HistoricoStatusResponse> historicoDto = den.getHistorico() != null 
+        List<DenunciaResponseDTO.HistoricoStatusResponse> historicoDto = den.getHistorico() != null
             ? den.getHistorico().stream()
-                .map(h -> new DenunciaResponseDTO.HistoricoStatusResponse(h.getStatus(), h.getDataAlteracao()))
-                .collect(Collectors.toList()) 
+                .map(h -> new DenunciaResponseDTO.HistoricoStatusResponse(h.getStatus(), h.getObservacao(), h.getDataAlteracao()))
+                .collect(Collectors.toList())
             : List.of();
 
         return new DenunciaResponseDTO(
@@ -173,7 +191,7 @@ public class DenunciaService {
             .genero(dto.manifestante().genero())
             .celular(dto.manifestante().celular())
             .email(dto.manifestante().email())
-            .denuncia(denuncia) 
+            .denuncia(denuncia) // Agora este método existe!
             .build();
     }
 

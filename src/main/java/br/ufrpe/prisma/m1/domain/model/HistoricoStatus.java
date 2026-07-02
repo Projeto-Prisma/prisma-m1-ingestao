@@ -16,6 +16,9 @@ public class HistoricoStatus {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Column(columnDefinition = "TEXT")
+    private String observacao;
+
     private LocalDateTime dataAlteracao;
 
     @ManyToOne

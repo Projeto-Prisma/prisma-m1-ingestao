@@ -20,6 +20,7 @@ public record DenunciaResponseDTO(
 ) {
     public record HistoricoStatusResponse(
         Status status,
+        String observacao,
         LocalDateTime dataAlteracao
     ) {}
 }

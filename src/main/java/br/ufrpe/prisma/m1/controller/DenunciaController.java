@@ -51,4 +51,10 @@ public class DenunciaController {
         denunciaService.atualizarStatus(id, novoStatus);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/assunto")
+    public ResponseEntity<Void> confirmarAssunto(@PathVariable UUID id, @RequestParam String assuntoFinal) {
+        denunciaService.confirmarAssunto(id, assuntoFinal);
+        return ResponseEntity.noContent().build();
+    }
 }
